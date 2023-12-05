@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <img src="{{ url_for('static', filename='fake_profile.png') }}" alt="Your Image">
+</body>
+<script>
+        // After 1 second, redirect to the secondary page
+        setTimeout(function() {
+        window.location.href = "/login"; // Redirect to the secondary page
+        }, 2000); // 1 second delay
+  </script>
+
+</html>
